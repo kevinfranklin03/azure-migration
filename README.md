@@ -257,8 +257,7 @@ df_payments_agg = df_payments.groupBy("order_id").agg(
 ***
 
 ### Gold Layer - Analytics-Ready Star Schema
-
-
+<img width="2816" height="1504" alt="gold" src="https://github.com/user-attachments/assets/ab2b7581-28a7-4283-99b5-dbb64c3f4b08" />
 
 
 **Purpose:** Denormalized, pre-aggregated data optimized for consumption (BI, ML, APIs).
@@ -359,9 +358,7 @@ dbutils.fs.mount(
 ***
 
 ## 📊 Consumption & Analytics
-<img width="2816" height="1504" alt="gold" src="https://github.com/user-attachments/assets/ab2b7581-28a7-4283-99b5-dbb64c3f4b08" />
 
-*Figure 9: Gold layer serving three consumption channels - Power BI dashboards, ML models, and REST APIs.*
 
 ### Power BI Dashboards
 
