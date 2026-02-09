@@ -1,0 +1,6 @@
+{
+    "name": "shir-local-oracle",
+    "properties": {
+        "type": "SelfHosted"
+    }
+}

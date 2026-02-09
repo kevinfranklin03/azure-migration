@@ -1,0 +1,16 @@
+{
+    "name": "LS_ADLS_Bronze",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "annotations": [],
+        "type": "AzureBlobFS",
+        "typeProperties": {
+            "url": "https://stgolistmigration.dfs.core.windows.net/",
+            "encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIzNjY2ODJjNi0wYTQwLTQyZjUtYTc4Mi0yNjQxOTE0OTY4YTMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+        },
+        "connectVia": {
+            "referenceName": "shir-local-oracle",
+            "type": "IntegrationRuntimeReference"
+        }
+    }
+}

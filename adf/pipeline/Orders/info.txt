@@ -1,0 +1,6 @@
+selected resource name:		PL_Extract_Olist_Orders_Partitioned
+selected resource type:		pipeline
+factory name:			personalProjects
+factory location:		westeurope
+subscription id:		479ef4f6-6c6f-4837-abda-7282905f313c
+time of download (UTC):		Mon, 09 Feb 2026 17:21:33 GMT

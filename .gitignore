@@ -1,0 +1,73 @@
+# ===========================
+# 🐍 Python & Virtual Envs
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# ===========================
+# ☁️ Azure & Data Factory
+# ===========================
+# Ignore ADF publish config (specific to user machine)
+publish_config.json
+
+# Ignore ARM template parameters that might contain secrets
+*Parameters.json
+!adf/**/*Parameters.json  # (Optional: Keep this if you use parameterized templates without secrets)
+
+# Azure Functions / Local settings (if you add them later)
+local.settings.json
+appsettings.json
+
+# ===========================
+# 🧱 Databricks
+# ===========================
+# Ignore Databricks Connect config
+.databricks-connect
+
+# ===========================
+# 🔒 Secrets & Security (CRITICAL)
+# ===========================
+.env
+.env.local
+config.ini
+secrets.json
+connection_strings.conf
+*.pem
+*.key
+*.p12
+
+# ===========================
+# 💾 Data Files (Never upload these!)
+# ===========================
+# Ignore all data file types
+*.csv
+*.tsv
+*.parquet
+*.avro

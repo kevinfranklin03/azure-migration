@@ -1,0 +1,145 @@
+{
+    "name": "PL_Extract_Olist_Order_Items",
+    "properties": {
+        "activities": [
+            {
+                "name": "Copy_Order_Items",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "OracleSource",
+                        "partitionOption": "None",
+                        "numberPrecision": 38,
+                        "numberScale": 18,
+                        "queryTimeout": "02:00:00"
+                    },
+                    "sink": {
+                        "type": "ParquetSink",
+                        "storeSettings": {
+                            "type": "AzureBlobFSWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "ParquetWriteSettings"
+                        }
+                    },
+                    "enableStaging": false,
+                    "parallelCopies": 4,
+                    "dataIntegrationUnits": 4,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "mappings": [
+                            {
+                                "source": {
+                                    "name": "ORDER_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "ORDER_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ORDER_ITEM_ID",
+                                    "type": "Decimal",
+                                    "scale": 18,
+                                    "precision": 38
+                                },
+                                "sink": {
+                                    "name": "ORDER_ITEM_ID",
+                                    "type": "Decimal",
+                                    "physicalType": "DECIMAL"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "PRODUCT_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "PRODUCT_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "SELLER_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "SELLER_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "SHIPPING_LIMIT_DATE",
+                                    "type": "DateTime"
+                                },
+                                "sink": {
+                                    "name": "SHIPPING_LIMIT_DATE",
+                                    "type": "DateTime",
+                                    "physicalType": "INT_96"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "PRICE",
+                                    "type": "Double"
+                                },
+                                "sink": {
+                                    "name": "PRICE",
+                                    "type": "Double",
+                                    "physicalType": "DOUBLE"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "FREIGHT_VALUE",
+                                    "type": "Double"
+                                },
+                                "sink": {
+                                    "name": "FREIGHT_VALUE",
+                                    "type": "Double",
+                                    "physicalType": "DOUBLE"
+                                }
+                            }
+                        ],
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "DS_Oracle_OrderItems_Base",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "DS_ADLS_Parquet_Orders",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2026-02-09T02:04:31Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

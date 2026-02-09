@@ -1,0 +1,157 @@
+{
+    "name": "PL_Extract_Olist_Orders_Partitioned",
+    "properties": {
+        "activities": [
+            {
+                "name": "Extract orders Table",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "OracleSource",
+                        "partitionOption": "PhysicalPartitionsOfTable",
+                        "partitionSettings": {
+                            "partitionNames": []
+                        },
+                        "numberPrecision": 38,
+                        "numberScale": 18,
+                        "queryTimeout": "02:00:00"
+                    },
+                    "sink": {
+                        "type": "ParquetSink",
+                        "storeSettings": {
+                            "type": "AzureBlobFSWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "ParquetWriteSettings"
+                        }
+                    },
+                    "enableStaging": false,
+                    "parallelCopies": 8,
+                    "dataIntegrationUnits": 4,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "mappings": [
+                            {
+                                "source": {
+                                    "name": "ORDER_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "ORDER_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "CUSTOMER_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "CUSTOMER_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ORDER_STATUS",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "ORDER_STATUS",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ORDER_PURCHASE_TIMESTAMP",
+                                    "type": "DateTime"
+                                },
+                                "sink": {
+                                    "name": "ORDER_PURCHASE_TIMESTAMP",
+                                    "type": "DateTime",
+                                    "physicalType": "INT_96"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ORDER_APPROVED_AT",
+                                    "type": "DateTime"
+                                },
+                                "sink": {
+                                    "name": "ORDER_APPROVED_AT",
+                                    "type": "DateTime",
+                                    "physicalType": "INT_96"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ORDER_DELIVERED_CARRIER_DATE",
+                                    "type": "DateTime"
+                                },
+                                "sink": {
+                                    "name": "ORDER_DELIVERED_CARRIER_DATE",
+                                    "type": "DateTime",
+                                    "physicalType": "INT_96"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ORDER_DELIVERED_CUSTOMER_DATE",
+                                    "type": "DateTime"
+                                },
+                                "sink": {
+                                    "name": "ORDER_DELIVERED_CUSTOMER_DATE",
+                                    "type": "DateTime",
+                                    "physicalType": "INT_96"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ORDER_ESTIMATED_DELIVERY_DATE",
+                                    "type": "DateTime"
+                                },
+                                "sink": {
+                                    "name": "ORDER_ESTIMATED_DELIVERY_DATE",
+                                    "type": "DateTime",
+                                    "physicalType": "INT_96"
+                                }
+                            }
+                        ],
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "DS_Oracle_Orders_Base",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "DS_ADLS_Parquet_Orders",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2026-02-09T02:04:31Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

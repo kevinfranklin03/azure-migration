@@ -1,0 +1,125 @@
+{
+    "name": "PL_Oracle_Payments_Base",
+    "properties": {
+        "activities": [
+            {
+                "name": "Copy_Payments",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "OracleSource",
+                        "partitionOption": "None",
+                        "numberPrecision": 38,
+                        "numberScale": 18,
+                        "queryTimeout": "02:00:00"
+                    },
+                    "sink": {
+                        "type": "ParquetSink",
+                        "storeSettings": {
+                            "type": "AzureBlobFSWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "ParquetWriteSettings"
+                        }
+                    },
+                    "enableStaging": false,
+                    "parallelCopies": 4,
+                    "dataIntegrationUnits": 4,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "mappings": [
+                            {
+                                "source": {
+                                    "name": "ORDER_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "ORDER_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "PAYMENT_SEQUENTIAL",
+                                    "type": "Decimal",
+                                    "scale": 18,
+                                    "precision": 38
+                                },
+                                "sink": {
+                                    "name": "PAYMENT_SEQUENTIAL",
+                                    "type": "Decimal",
+                                    "physicalType": "DECIMAL"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "PAYMENT_TYPE",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "PAYMENT_TYPE",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "PAYMENT_INSTALLMENTS",
+                                    "type": "Decimal",
+                                    "scale": 18,
+                                    "precision": 38
+                                },
+                                "sink": {
+                                    "name": "PAYMENT_INSTALLMENTS",
+                                    "type": "Decimal",
+                                    "physicalType": "DECIMAL"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "PAYMENT_VALUE",
+                                    "type": "Double"
+                                },
+                                "sink": {
+                                    "name": "PAYMENT_VALUE",
+                                    "type": "Double",
+                                    "physicalType": "DOUBLE"
+                                }
+                            }
+                        ],
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "DS_Oracle_Payments_Base",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "DS_ADLS_Parquet_Payments",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2026-02-09T02:04:30Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

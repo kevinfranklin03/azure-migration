@@ -1,0 +1,123 @@
+{
+    "name": "PL_Extract_Olist_Customers",
+    "properties": {
+        "activities": [
+            {
+                "name": "Extract customers table",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "OracleSource",
+                        "partitionOption": "None",
+                        "numberPrecision": 38,
+                        "numberScale": 18,
+                        "queryTimeout": "02:00:00"
+                    },
+                    "sink": {
+                        "type": "ParquetSink",
+                        "storeSettings": {
+                            "type": "AzureBlobFSWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "ParquetWriteSettings"
+                        }
+                    },
+                    "enableStaging": false,
+                    "parallelCopies": 8,
+                    "dataIntegrationUnits": 4,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "mappings": [
+                            {
+                                "source": {
+                                    "name": "CUSTOMER_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "CUSTOMER_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "CUSTOMER_UNIQUE_ID",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "CUSTOMER_UNIQUE_ID",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "CUSTOMER_ZIP_CODE_PREFIX",
+                                    "type": "Decimal",
+                                    "scale": 18,
+                                    "precision": 38
+                                },
+                                "sink": {
+                                    "name": "CUSTOMER_ZIP_CODE_PREFIX",
+                                    "type": "Decimal",
+                                    "physicalType": "DECIMAL"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "CUSTOMER_CITY",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "CUSTOMER_CITY",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "CUSTOMER_STATE",
+                                    "type": "String"
+                                },
+                                "sink": {
+                                    "name": "CUSTOMER_STATE",
+                                    "type": "String",
+                                    "physicalType": "UTF8"
+                                }
+                            }
+                        ],
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "DS_Oracle_Customers_Base",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "DS_ADLS_Parquet_Customers",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2026-02-09T01:55:02Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

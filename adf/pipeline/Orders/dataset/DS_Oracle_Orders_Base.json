@@ -1,0 +1,17 @@
+{
+    "name": "DS_Oracle_Orders_Base",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_Oracle_Local",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "OracleTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": "OLIST",
+            "table": "OLIST_ORDERS_BASE"
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

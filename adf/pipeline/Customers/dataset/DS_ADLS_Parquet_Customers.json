@@ -1,0 +1,21 @@
+{
+    "name": "DS_ADLS_Parquet_Customers",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_ADLS_Bronze",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "Parquet",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobFSLocation",
+                "folderPath": "olist/customers",
+                "fileSystem": "bronze"
+            },
+            "compressionCodec": "snappy"
+        },
+        "schema": []
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

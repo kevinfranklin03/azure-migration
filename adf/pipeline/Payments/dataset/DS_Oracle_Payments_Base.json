@@ -1,0 +1,17 @@
+{
+    "name": "DS_Oracle_Payments_Base",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_Oracle_Local",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "OracleTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": "OLIST",
+            "table": "OLIST_ORDER_PAYMENTS_BASE"
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}
