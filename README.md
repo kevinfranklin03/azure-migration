@@ -1,10 +1,9 @@
-# 🚀 Enterprise Data Migration: Oracle to Azure Lakehouse
+# 🚀 Data Migration: Oracle to Azure Lakehouse
 
-
-
-
-
-
+![Azure](https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoft-azure&logoColor=white)
+![Databricks](https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white)
+![Python](https://img.shields.io/badge/PySpark-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Pipeline-Success-success?style=for-the-badge)
 
 
 > **A production-grade data lakehouse solution demonstrating enterprise-scale migration from on-premise Oracle to Azure, processing 720,000+ records across e-commerce, aerospace, and communications domains with full medallion architecture implementation.**
@@ -50,7 +49,7 @@ This project showcases a **complete end-to-end data engineering solution** that 
 
 The solution leverages **Azure Data Factory** for orchestration and **Azure Databricks** for distributed data processing, following industry best practices for lakehouse architectures.
 
-
+<img width="2816" height="1504" alt="full_architecture" src="https://github.com/user-attachments/assets/203ca713-1ffb-4d7c-89ad-27695ac158b0" />
 *Figure 1: Complete end-to-end data pipeline from on-premise Oracle through Medallion layers to consumption.*
 
 ### Architecture Highlights
@@ -76,6 +75,7 @@ The solution leverages **Azure Data Factory** for orchestration and **Azure Data
 
 The source system simulates a complex enterprise environment with three distinct business domains hosted in a single Oracle 19c database.
 
+<img width="2816" height="1536" alt="data" src="https://github.com/user-attachments/assets/8823b416-86fb-4a9a-8ede-729d9e25bc31" />
 
 *Figure 2: On-premise Oracle database with 3 schemas representing different business domains.*
 
@@ -101,6 +101,7 @@ The source system simulates a complex enterprise environment with three distinct
 
 **Solution:** Self-Hosted Integration Runtime (SHIR) establishes secure outbound-only connectivity.
 
+<img width="2816" height="1536" alt="shir" src="https://github.com/user-attachments/assets/138429d4-7178-4d2c-9d53-61bd511f39cd" />
 
 *Figure 3: Hybrid cloud gateway maintaining enterprise security through encrypted TLS-only connections.*
 
@@ -125,6 +126,7 @@ The source system simulates a complex enterprise environment with three distinct
 
 Azure Data Factory orchestrates 6 parallel pipelines to extract data from Oracle and land it in the Bronze layer.
 
+<img width="2816" height="1536" alt="data lake" src="https://github.com/user-attachments/assets/b578752e-aff0-498b-a035-eeeec872db2d" />
 
 *Figure 4: Six ADF pipelines with parallel execution extracting 720K+ records in under 5 minutes.*
 
@@ -169,6 +171,7 @@ The Orders pipeline demonstrates advanced parallel extraction using Oracle's phy
 
 ### Bronze Layer - Raw Landing Zone
 
+<img width="2816" height="1536" alt="bronze" src="https://github.com/user-attachments/assets/fc795675-16c2-4099-97ef-37093a37eaa3" />
 
 *Figure 5: Bronze layer with 720K+ records stored in immutable Parquet format across 6 domain folders.*
 
@@ -195,6 +198,7 @@ bronze/
 
 ### Silver Layer - Cleaned & Validated
 
+<img width="2816" height="1504" alt="silver" src="https://github.com/user-attachments/assets/9d216018-71a6-4959-9b4c-f956b58b43e3" />
 
 *Figure 6: Six Databricks notebooks applying data quality rules and business logic transformations.*
 
@@ -255,7 +259,7 @@ df_payments_agg = df_payments.groupBy("order_id").agg(
 ### Gold Layer - Analytics-Ready Star Schema
 
 
-*Figure 7: Star schema with pre-joined fact tables and 5 pre-aggregated data marts for fast analytics.*
+
 
 **Purpose:** Denormalized, pre-aggregated data optimized for consumption (BI, ML, APIs).
 
@@ -307,8 +311,6 @@ spark.sql("""
 ## ⚙️ Processing Engine (Azure Databricks)
 
 
-*Figure 8: 14 PySpark notebooks organized in 3 phases processing 720K+ records end-to-end in 15 minutes.*
-
 ### Cluster Configuration
 
 ```yaml
@@ -357,7 +359,7 @@ dbutils.fs.mount(
 ***
 
 ## 📊 Consumption & Analytics
-
+<img width="2816" height="1504" alt="gold" src="https://github.com/user-attachments/assets/ab2b7581-28a7-4283-99b5-dbb64c3f4b08" />
 
 *Figure 9: Gold layer serving three consumption channels - Power BI dashboards, ML models, and REST APIs.*
 
@@ -607,73 +609,89 @@ df_fact_orders.write.format("delta").mode("overwrite").save("gold/fact_orders/")
 ## 📁 Project Structure
 
 ```
-multi-domain-data-pipeline/
-├── README.md                          # This file
-├── LICENSE                            # MIT License
-├── .gitignore                         # Exclude secrets, temp files
+azure-migration/
+├── README.md
+├── .gitignore
 │
-├── docs/
-│   ├── ARCHITECTURE.md                # Detailed architecture documentation
-│   ├── DATA_SOURCES.md                # Dataset descriptions and licenses
-│   ├── DATA_CATALOG.md                # Full data dictionary (all tables/columns)
-│   ├── RUNBOOK.md                     # Deployment and execution guide
-│   └── diagrams/
-│       ├── full_architecture.png      # End-to-end system architecture
-│       ├── data.png                   # Oracle source system (3 schemas)
-│       ├── shir.png                   # Hybrid connectivity architecture
-│       ├── adf_pipelines.png          # Azure Data Factory pipelines
-│       ├── bronze.png                 # Bronze layer (raw landing zone)
-│       ├── silver.png                 # Silver layer (cleaned & validated)
-│       ├── gold.png                   # Gold layer (star schema & marts)
-│       ├── databricks_processing.png  # 14 PySpark notebooks (3 phases)
-│       └── consumption.png            # BI, ML, API consumption layer
+├── adf/
+│ └── pipeline/
+│ ├── Customers/
+│ │ ├── dataset/
+│ │ │ ├── DS_ADLS_Parquet_Customers.json
+│ │ │ └── DS_Oracle_Customers_Base.json
+│ │ ├── integrationRuntime/
+│ │ │ └── shir-local-oracle.json
+│ │ ├── linkedService/
+│ │ │ ├── LS_ADLS_Bronze.json
+│ │ │ └── LS_Oracle_Local.json
+│ │ ├── pipeline/
+│ │ │ └── PL_Extract_Olist_Customers.json
+│ │ ├── diagnostic.json
+│ │ └── info.txt
+│ │
+│ ├── Orders/
+│ │ ├── dataset/
+│ │ │ ├── DS_ADLS_Parquet_Orders.json
+│ │ │ └── DS_Oracle_Orders_Base.json
+│ │ ├── integrationRuntime/
+│ │ │ └── shir-local-oracle.json
+│ │ ├── linkedService/
+│ │ │ ├── LS_ADLS_Bronze.json
+│ │ │ └── LS_Oracle_Local.json
+│ │ ├── pipeline/
+│ │ │ └── PL_Extract_Olist_Orders_Partitioned.json
+│ │ ├── diagnostic.json
+│ │ └── info.txt
+│ │
+│ ├── Order_items/
+│ │ ├── dataset/
+│ │ │ ├── DS_ADLS_Parquet_Orders.json
+│ │ │ └── DS_Oracle_OrderItems_Base.json
+│ │ ├── integrationRuntime/
+│ │ │ └── shir-local-oracle.json
+│ │ ├── linkedService/
+│ │ │ ├── LS_ADLS_Bronze.json
+│ │ │ └── LS_Oracle_Local.json
+│ │ ├── pipeline/
+│ │ │ └── PL_Extract_Olist_Order_Items.json
+│ │ ├── diagnostic.json
+│ │ └── info.txt
+│ │
+│ └── Payments/
+│ ├── dataset/
+│ │ ├── DS_ADLS_Parquet_Payments.json
+│ │ └── DS_Oracle_Payments_Base.json
+│ ├── integrationRuntime/
+│ │ └── shir-local-oracle.json
+│ ├── linkedService/
+│ │ ├── LS_ADLS_Bronze.json
+│ │ └── LS_Oracle_Local.json
+│ ├── pipeline/
+│ │ └── PL_Oracle_Payments_Base.json
+│ ├── diagnostic.json
+│ └── info.txt
 │
-├── notebooks/
-│   ├── 01_silver_layer/
-│   │   ├── 01_bronze_to_silver_orders.py
-│   │   ├── 02_bronze_to_silver_customers.py
-│   │   ├── 03_bronze_to_silver_order_items.py
-│   │   ├── 04_bronze_to_silver_payments.py
-│   │   ├── 05_bronze_to_silver_nasa_turbofan.py
-│   │   └── 06_bronze_to_silver_enron_emails.py
-│   │
-│   ├── 02_gold_layer/
-│   │   ├── 07_silver_to_gold_fact_orders.py
-│   │   ├── 08_silver_to_gold_dim_customers.py
-│   │   ├── 09_silver_to_gold_dim_date.py
-│   │   ├── 10_silver_to_gold_nasa_engine_summary.py
-│   │   └── 11_silver_to_gold_enron_email_summary.py
-│   │
-│   └── 03_marts/
-│       ├── 12_gold_marts_olist_business_analytics.py
-│       ├── 13_gold_marts_nasa_predictive_maintenance.py
-│       └── 14_gold_marts_enron_communication_analytics.py
+└── databricks/
+├── 00_setup_and_test_access.ipynb # ADLS mount configuration
 │
-├── infra/
-│   ├── adf/
-│   │   ├── pipeline_orders_partitioned.json      # ADF pipeline definition
-│   │   ├── pipeline_customers.json
-│   │   ├── pipeline_order_items.json
-│   │   ├── pipeline_payments.json
-│   │   ├── pipeline_enron.json
-│   │   ├── pipeline_nasa.json
-│   │   ├── linked_service_oracle.json            # Connection configs
-│   │   └── linked_service_adls.json
-│   │
-│   └── databricks/
-│       └── cluster_config.json                   # Cluster configuration
+├── 01_bronze_to_silver_orders.ipynb # Phase 1: Bronze → Silver
+├── 02_bronze_to_silver_customers.ipynb
+├── 03_bronze_to_silver_order_items.ipynb
+├── 04_bronze_to_silver_payments.ipynb
+├── 05_bronze_to_silver_nasa_turbofan.ipynb
+├── 06_bronze_to_silver_enron_emails.ipynb
 │
-├── sql/
-│   ├── oracle_source_schema.sql                  # Source table DDL
-│   └── gold_star_schema.sql                      # Gold layer DDL
+├── 07_silver_to_gold_fact_orders.ipynb # Phase 2: Silver → Gold
+├── 08_silver_to_gold_dim_customers.ipynb
+├── 09_silver_to_gold_dim_date.ipynb
+├── 10_silver_to_gold_nasa_engine_summary.ipynb
+├── 11_silver_to_gold_enron_email_summary.ipynb
 │
-├── data/
-│   └── sample/
-│       ├── orders_sample.csv                     # 100-row samples for testing
-│       ├── customers_sample.csv
-│       └── README.md                             # Links to full datasets
+├── 12_gold_marts_olist_business_analytics.ipynb # Phase 3: Gold → Marts
+├── 13_gold_marts_nasa_predictive_maintenance.ipynb
+├── 14_gold_marts_enron_communication_analytics.ipynb
 │
-└── .env.example                                   # Template for secrets (never commit .env)
+└── 15_visualize_analytics.ipynb # Visualization & validation
 ```
 
 ***
@@ -704,8 +722,8 @@ multi-domain-data-pipeline/
 
 #### 1. Clone Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/multi-domain-data-pipeline.git
-cd multi-domain-data-pipeline
+git clone https://github.com/kevinfranklin03/azure-migration.git
+cd azure-migration
 ```
 
 #### 2. Create Azure Resources
@@ -913,28 +931,6 @@ spark.read.format("delta").load("/mnt/gold/mart_monthly_sales").count()
 
 ***
 
-### Interview Talking Points
-
-**"Tell me about a data engineering project you've worked on."**
-
-> "I built an end-to-end data lakehouse on Azure that migrates 720,000+ records from an on-premise Oracle database across three distinct business domains: e-commerce, aerospace sensor data, and communications text. The solution uses Azure Data Factory for orchestration with Self-Hosted Integration Runtime for secure hybrid connectivity—no inbound firewall rules required.
-> 
-> I implemented the full medallion architecture with Bronze for raw immutable data, Silver for cleaned and validated business-ready tables, and Gold for a dimensional star schema with pre-aggregated data marts. The processing layer uses Azure Databricks with PySpark and Delta Lake, handling complex transformations like 4-way joins, many-to-one aggregations, and schema alignment across varying source formats.
-> 
-> The Gold layer serves Power BI dashboards analyzing $15.8M in revenue, ML models for predictive maintenance on 709 turbofan engines, and REST APIs for real-time customer insights. I achieved 10x query performance improvements through pre-joined fact tables and strategic partitioning."
-
-**"Describe a technical challenge you solved."**
-
-> "The NASA turbofan sensor data came in 4 separate files with inconsistent schemas—ranging from 20 to 27 columns per file. I couldn't simply union them because Spark would fail on mismatched schemas. I implemented dynamic schema alignment by detecting the maximum column count across all files, then padding missing columns with typed null values before performing a unionByName operation. This unified 160,359 sensor readings into a single consistent Delta table partitioned by dataset name, enabling predictive maintenance ML models downstream."
-
-**"How do you ensure data quality?"**
-
-> "I implemented quality gates at each medallion layer. In Bronze-to-Silver transformations, I apply validation rules like filtering canceled orders, checking for null delivery dates, and validating zip code formats. For the orders table, this filtered out 1,241 invalid records (1.2% rejection rate). I also enforce referential integrity—for example, the payments aggregation ensures every payment ties to a valid order_id.
-> 
-> In Silver-to-Gold, I use Delta Lake's schema enforcement to prevent data type mismatches. I also calculate business KPIs like late delivery flags by comparing actual vs estimated dates, which revealed an 8% late delivery rate—actionable intelligence for the business. All transformations log row counts and quality metrics to Azure Monitor for observability."
-
-***
-
 ## 🔮 Future Enhancements
 
 - [ ] **Incremental Processing:** Implement watermark-based incremental loads (currently full refresh)
@@ -951,16 +947,6 @@ spark.read.format("delta").load("/mnt/gold/mart_monthly_sales").count()
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-***
-
-## 👤 Author
-
-**Kevin**
-- Location: Southampton, England, GB
-- Role: Full-Stack Software Developer & Data Engineer
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)
-- Portfolio: [Your Portfolio](https://your-portfolio.com)
 
 ***
 
